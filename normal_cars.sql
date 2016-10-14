@@ -10,25 +10,19 @@ CREATE TABLE car_make (
 );
 CREATE TABLE car_model (
   F_id integer,
-  model_id serial NOT NULL,
   code character varying(125),
   title character varying(125),
-  PRIMARY KEY (model_id),
-  FOREIGN KEY (F_id) REFERENCES car_make(P_id)
-);
-CREATE TABLE years (
-  M_id integer,
   year integer,
-  FOREIGN KEY (M_id) REFERENCES car_model(model_id)
+  FOREIGN KEY (F_id) REFERENCES car_make(P_id)
 );
 
 INSERT INTO car_make (code, title)
 SELECT DISTINCT make_code, make_title FROM car_models ORDER BY make_title ASC;
 
-INSERT INTO car_model (F_id, code, title)
-SELECT DISTINCT (SELECT P_id FROM car_make WHERE title = car_models.make_title), model_code, model_title FROM car_models;
+INSERT INTO car_model (F_id, code, title, year)
+SELECT DISTINCT (SELECT P_id FROM car_make WHERE title = car_models.make_title), model_code, model_title, year FROM car_models;
 
-INSERT INTO years (M_id, year)
-SELECT (SELECT model_id FROM car_model WHERE code = 'GT-R'), year FROM car_models;
-
--- SELECT DISTINCT make_title FROM car_models;
+SELECT DISTINCT title FROM car_make;
+SELECT DISTINCT title FROM car_model WHERE F_id = (SELECT P_id FROM car_make WHERE code = 'VOLKS');
+SELECT code, title, (SELECT DISTINCT code FROM car_make WHERE code = 'LAM'), year FROM car_model WHERE F_id = (SELECT P_id FROM car_make WHERE code = 'LAM');
+SELECT * FROM car_model WHERE year BETWEEN 2010 and 2015;
