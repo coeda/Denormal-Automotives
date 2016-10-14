@@ -24,8 +24,5 @@ SELECT DISTINCT (SELECT P_id FROM car_make WHERE title = car_models.make_title),
 SELECT DISTINCT title FROM car_make;
 SELECT DISTINCT title FROM car_model WHERE F_id = (SELECT P_id FROM car_make WHERE code = 'VOLKS');
 --SELECT code, title, (SELECT DISTINCT code FROM car_make WHERE code = 'LAM'), year FROM car_model WHERE F_id = (SELECT P_id FROM car_make WHERE code = 'LAM');
-SELECT car_model.title, car_model.code, car_model.year, car_make.code
-FROM car_model
-INNER JOIN car_make ON car_model.F_id = car_make.P_id
-WHERE car_make.code = 'LAM';
-SELECT * FROM car_model WHERE year BETWEEN 2010 and 2015;
+SELECT car_model.title, car_model.code, car_model.year, car_make.code FROM car_model INNER JOIN car_make ON car_model.F_id = car_make.P_id WHERE car_make.code = 'LAM';
+SELECT  car_make.code, car_make.title, car_model.title, car_model.code, car_model.year FROM car_model INNER JOIN car_make ON car_model.F_id = car_make.P_id WHERE year BETWEEN 2010 and 2015;
